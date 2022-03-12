@@ -1,5 +1,7 @@
 package com.weedprj.springserver.repositories;
 
+import java.util.List;
+
 import com.weedprj.springserver.models.User;
 import com.weedprj.springserver.ports.repository.UserRepoPort;
 
@@ -24,6 +26,11 @@ public class UserRepository implements UserRepoPort {
   @Override
   public User getUser() {
     return userRepo.getById(1);
+  }
+
+  @Override
+  public List<User> getUsers() {
+    return userRepo.findAll();
   }
 
 }

@@ -26,9 +26,7 @@ public class UserService implements UserServicePort {
 
   @Override
   public List<User> getUsers() {
-    return List.of(
-        new User("name", "email@google.com", "00000000000"),
-        new User("name2", "email2@google.com", "10000000000"));
+    return repo.getUsers();
   }
 
 }
