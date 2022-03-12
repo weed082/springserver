@@ -6,8 +6,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "user")
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -15,6 +18,9 @@ public class User {
   private String name;
   private String email;
   private String phone;
+
+  public User() {
+  }
 
   public User(String name, String email, String phone) {
     this.name = name;

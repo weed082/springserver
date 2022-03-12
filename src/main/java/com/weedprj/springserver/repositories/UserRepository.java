@@ -23,7 +23,6 @@ public class UserRepository implements UserRepoPort {
 
   @Override
   public User getUser() {
-    userRepo.save(new User("Noh", "email", "phone"));
     return userRepo.getById(1);
   }
 
