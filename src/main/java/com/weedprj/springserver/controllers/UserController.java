@@ -17,7 +17,7 @@ public class UserController {
   @GetMapping(path = "api/user/save")
   public String saveUser() {
     service.saveUser();
-    return "success";
+    return "yes";
   }
 
   @GetMapping(path = "api/user")

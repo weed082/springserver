@@ -4,4 +4,5 @@ services:
     build:
       dockerfile: Dockerfile.dev
     volumes:
-      - .:/app
+      - ./src/:/app/src/
+      - ${ABS_PATH}/build.gradle:/app/build.gradle
