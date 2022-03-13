@@ -5,7 +5,7 @@ import java.util.List;
 import com.weedprj.springserver.models.User;
 
 public interface UserRepoPort {
-  void saveUser();
+  void saveUser(User user);
 
   void deleteUser(int idx);
 

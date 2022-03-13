@@ -19,8 +19,8 @@ public class UserRepository implements UserRepoPort {
   private UserJpa userRepo;
 
   @Override
-  public void saveUser() {
-    userRepo.save(new User("name", "email", "phone"));
+  public void saveUser(User user) {
+    userRepo.save(user);
   }
 
   @Override

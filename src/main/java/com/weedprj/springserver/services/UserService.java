@@ -15,8 +15,8 @@ public class UserService implements UserServicePort {
   private UserRepoPort repo;
 
   @Override
-  public void saveUser() {
-    repo.saveUser();
+  public void saveUser(User user) {
+    repo.saveUser(user);
   }
 
   @Override
