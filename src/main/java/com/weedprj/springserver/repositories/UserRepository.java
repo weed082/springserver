@@ -24,13 +24,19 @@ public class UserRepository implements UserRepoPort {
   }
 
   @Override
-  public User getUser() {
-    return userRepo.getById(1);
+  public User getUser(int idx) {
+    return userRepo.getById(idx);
   }
 
   @Override
   public List<User> getUsers() {
     return userRepo.findAll();
+  }
+
+  @Override
+  public void deleteUser(int idx) {
+    userRepo.deleteById(idx);
+
   }
 
 }

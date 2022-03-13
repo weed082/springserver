@@ -20,13 +20,18 @@ public class UserService implements UserServicePort {
   }
 
   @Override
-  public User getUser() {
-    return repo.getUser();
+  public User getUser(int idx) {
+    return repo.getUser(idx);
   }
 
   @Override
   public List<User> getUsers() {
     return repo.getUsers();
+  }
+
+  @Override
+  public void deleteUser(int idx) {
+    repo.deleteUser(idx);
   }
 
 }
