@@ -1,16 +1,18 @@
 package com.weedprj.springserver.ports.repository;
 
+import com.weedprj.springserver.models.User;
 import java.util.List;
 
-import com.weedprj.springserver.models.User;
-
 public interface UserRepoPort {
-  void saveUser(User user);
+  void register(User user);
 
-  void deleteUser(int idx);
+  void delete(int idx);
 
   User getUser(int idx);
 
   List<User> getUsers();
 
+  boolean checkEmail(String email); // check duplicate email
+
+  void updateProfile(int idx, String img, String name);
 }

@@ -1,26 +1,24 @@
 package com.weedprj.springserver.services;
 
-import java.util.List;
-
 import com.weedprj.springserver.models.User;
 import com.weedprj.springserver.ports.repository.UserRepoPort;
 import com.weedprj.springserver.ports.service.UserServicePort;
-
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService implements UserServicePort {
-  @Autowired
-  private UserRepoPort repo;
+  @Autowired private UserRepoPort repo;
 
   @Override
-  public void saveUser(User user) {
-    repo.saveUser(user);
+  public void register(User user) {
+    repo.register(user);
   }
 
   @Override
   public User getUser(int idx) {
+    System.out.println("id " + idx);
     return repo.getUser(idx);
   }
 
@@ -31,7 +29,6 @@ public class UserService implements UserServicePort {
 
   @Override
   public void deleteUser(int idx) {
-    repo.deleteUser(idx);
+    repo.delete(idx);
   }
-
 }

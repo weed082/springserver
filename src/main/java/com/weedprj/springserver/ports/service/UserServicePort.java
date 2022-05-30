@@ -1,11 +1,10 @@
 package com.weedprj.springserver.ports.service;
 
+import com.weedprj.springserver.models.User;
 import java.util.List;
 
-import com.weedprj.springserver.models.User;
-
 public interface UserServicePort {
-  void saveUser(User user);
+  void register(User user);
 
   void deleteUser(int idx);
 

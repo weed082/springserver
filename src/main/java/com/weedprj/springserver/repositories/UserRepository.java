@@ -1,25 +1,21 @@
 package com.weedprj.springserver.repositories;
 
-import java.util.List;
-
 import com.weedprj.springserver.models.User;
 import com.weedprj.springserver.ports.repository.UserRepoPort;
-
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-interface UserJpa extends JpaRepository<User, Integer> {
-}
+interface UserJpa extends JpaRepository<User, Integer> {}
 
 @Repository
 public class UserRepository implements UserRepoPort {
-  @Autowired
-  private UserJpa userRepo;
+  @Autowired private UserJpa userRepo;
 
   @Override
-  public void saveUser(User user) {
+  public void register(User user) {
     userRepo.save(user);
   }
 
@@ -34,9 +30,18 @@ public class UserRepository implements UserRepoPort {
   }
 
   @Override
-  public void deleteUser(int idx) {
+  public void delete(int idx) {
     userRepo.deleteById(idx);
-
   }
 
+  @Override
+  public boolean checkEmail(String email) {
+    return true;
+  }
+
+  @Override
+  public void updateProfile(int idx, String img, String name) {
+    // TODO Auto-generated method stub
+
+  }
 }
