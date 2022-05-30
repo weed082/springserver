@@ -1,14 +1,19 @@
 package com.weedprj.springserver.ports.service;
 
-import com.weedprj.springserver.models.User;
+import com.weedprj.springserver.domain.user.User;
 import java.util.List;
+import java.util.Optional;
 
 public interface UserServicePort {
   void register(User user);
 
-  void deleteUser(int idx);
+  void deleteUser(long idx);
 
-  User getUser(int idx);
+  Optional<User> getUser(long idx);
+
+  Optional<User> login(String email, String password);
+
+  boolean existsUserByEmail(String email);
 
   List<User> getUsers();
 }

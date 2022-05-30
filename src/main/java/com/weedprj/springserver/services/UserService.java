@@ -1,9 +1,10 @@
 package com.weedprj.springserver.services;
 
-import com.weedprj.springserver.models.User;
+import com.weedprj.springserver.domain.user.User;
 import com.weedprj.springserver.ports.repository.UserRepoPort;
 import com.weedprj.springserver.ports.service.UserServicePort;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +18,13 @@ public class UserService implements UserServicePort {
   }
 
   @Override
-  public User getUser(int idx) {
-    System.out.println("id " + idx);
+  public Optional<User> getUser(long idx) {
     return repo.getUser(idx);
+  }
+
+  @Override
+  public boolean existsUserByEmail(String email) {
+    return repo.existsUserByEmail(email);
   }
 
   @Override
@@ -28,7 +33,12 @@ public class UserService implements UserServicePort {
   }
 
   @Override
-  public void deleteUser(int idx) {
+  public void deleteUser(long idx) {
     repo.delete(idx);
+  }
+
+  @Override
+  public Optional<User> login(String email, String password) {
+    return repo.login(email, password);
   }
 }

@@ -1,4 +1,4 @@
-package com.weedprj.springserver.models;
+package com.weedprj.springserver.domain;
 
 import java.time.LocalDateTime;
 import javax.persistence.Column;
@@ -10,7 +10,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public abstract class BaseTime {
+public abstract class BaseEntity {
   @Column(name = "upload_date")
   @CreatedDate
   private LocalDateTime uploadDate;

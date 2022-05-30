@@ -1,43 +1,61 @@
 package com.weedprj.springserver.controllers;
 
-import com.weedprj.springserver.models.User;
+import com.weedprj.springserver.domain.user.User;
 import com.weedprj.springserver.ports.service.UserServicePort;
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("api/v1/user")
 public class UserController {
   @Autowired private UserServicePort service;
 
+  // 중복된 이메일 확인
+  @GetMapping(path = "/email/{email}")
+  public ResponseEntity<Void> exitsUserByEmail(@PathVariable String email) {
+    return service.existsUserByEmail(email)
+        ? ResponseEntity.ok().build()
+        : ResponseEntity.notFound().build();
+  }
+
   // 사용자 저장
-  @PostMapping(path = "user")
-  public String register(@RequestBody User user) {
+  @PostMapping
+  public ResponseEntity<Void> register(@RequestBody User user) {
     service.register(user);
-    System.out.printf(
-        "%s, %s, %s, %s %n", user.getIdx(), user.getName(), user.getEmail(), user.getPhone());
-    return "SUCCESS";
+    return ResponseEntity.accepted().build();
   }
 
   // 사용자 프로필 정보 저장
-  @PostMapping(path = "user/profile")
-  public String uploadProfile(@RequestBody User user) {
-    service.register(user);
-    return "SUCCESS";
+  @PostMapping(path = "/profile")
+  public ResponseEntity<Void> uploadProfile(@RequestBody User user) {
+    return ResponseEntity.accepted().build();
+  }
+
+  @PostMapping(path = "/login")
+  public ResponseEntity<User> login(@RequestBody User user) {
+    Optional<User> userOpt = service.login(user.getEmail(), user.getPassword());
+    return userOpt.isPresent()
+        ? ResponseEntity.ok(userOpt.get())
+        : ResponseEntity.notFound().build();
   }
 
   // 단일 사용자 정보 가져오기
-  @GetMapping(path = "user/{idx}")
+  @GetMapping(path = "/{idx}")
   @ResponseBody
-  public User getUser(@PathVariable int idx) {
-    return service.getUser(idx);
+  public ResponseEntity<User> getUser(@PathVariable long idx) {
+    Optional<User> userOpt = service.getUser(idx);
+    if (userOpt.isEmpty()) return ResponseEntity.notFound().build();
+    return ResponseEntity.ok(userOpt.get());
   }
 
   // 사용자 리스트 정보 가져오기
@@ -48,10 +66,8 @@ public class UserController {
   }
 
   // 사용자 삭제
-  @DeleteMapping(path = "user")
-  public String deleteUser(@RequestBody Map<String, Integer> req) {
-    int userIdx = req.get("idx");
+  @DeleteMapping(path = "/{idx}")
+  public void deleteUser(@PathVariable long userIdx) {
     service.deleteUser(userIdx);
-    return "SUCCESS";
   }
 }
