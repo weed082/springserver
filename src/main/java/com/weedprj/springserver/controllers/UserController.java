@@ -23,6 +23,8 @@ public class UserController {
   // 중복된 이메일 확인
   @GetMapping(path = "/email/{email}")
   public ResponseEntity<Void> exitsUserByEmail(@PathVariable String email) {
+    if (email.isEmpty()) return ResponseEntity.badRequest().build();
+
     return service.existsUserByEmail(email)
         ? ResponseEntity.ok().build()
         : ResponseEntity.notFound().build();
@@ -30,9 +32,8 @@ public class UserController {
 
   // 사용자 저장
   @PostMapping
-  public ResponseEntity<Void> register(@RequestBody User user) {
-    service.register(user);
-    return ResponseEntity.accepted().build();
+  public ResponseEntity<Long> register(@RequestBody User user) {
+    return ResponseEntity.ok(service.register(user).getIdx());
   }
 
   // 사용자 프로필 정보 저장
@@ -43,6 +44,9 @@ public class UserController {
 
   @PostMapping(path = "/login")
   public ResponseEntity<User> login(@RequestBody User user) {
+    if (user.getEmail().isEmpty()) return ResponseEntity.badRequest().build();
+    if (user.getPassword().isEmpty()) return ResponseEntity.badRequest().build();
+
     Optional<User> userOpt = service.login(user.getEmail(), user.getPassword());
     return userOpt.isPresent()
         ? ResponseEntity.ok(userOpt.get())

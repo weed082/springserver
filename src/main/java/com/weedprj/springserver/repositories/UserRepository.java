@@ -21,8 +21,8 @@ public class UserRepository implements UserRepoPort {
   @Autowired private UserJpa userRepo;
 
   @Override
-  public void register(User user) {
-    userRepo.save(user);
+  public User register(User user) {
+    return userRepo.save(user);
   }
 
   @Override

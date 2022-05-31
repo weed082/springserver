@@ -13,8 +13,8 @@ public class UserService implements UserServicePort {
   @Autowired private UserRepoPort repo;
 
   @Override
-  public void register(User user) {
-    repo.register(user);
+  public User register(User user) {
+    return repo.register(user);
   }
 
   @Override

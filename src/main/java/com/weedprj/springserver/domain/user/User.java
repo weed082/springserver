@@ -20,20 +20,22 @@ public class User extends BaseEntity {
 
   @Id
   @GeneratedValue(generator = "user_seq", strategy = GenerationType.SEQUENCE)
+  @Column(updatable = false)
   private long idx;
 
-  @Column(nullable = false)
+  @Column(nullable = false, unique = true)
   private String email;
 
   @Column(nullable = false)
   private String password;
 
-  @Column private String name;
+  @Column(length = 100)
+  private String name;
 
   @Column(name = "img_url")
   private String imgUrl;
 
-  public long getIdx() {
+  public Long getIdx() {
     return idx;
   }
 
