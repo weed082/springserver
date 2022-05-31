@@ -2,9 +2,12 @@ package com.weedprj.springserver.controllers;
 
 import com.weedprj.springserver.domain.user.User;
 import com.weedprj.springserver.ports.service.UserServicePort;
-import java.util.List;
+import com.weedprj.springserver.util.exception.ApiException;
 import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,12 +21,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("api/v1/user")
 public class UserController {
+  private final Logger log = LoggerFactory.getLogger("UserController");
   @Autowired private UserServicePort service;
 
   // 중복된 이메일 확인
   @GetMapping(path = "/email/{email}")
   public ResponseEntity<Void> exitsUserByEmail(@PathVariable String email) {
-    if (email.isEmpty()) return ResponseEntity.badRequest().build();
+    if (email.isEmpty()) throw new ApiException(HttpStatus.BAD_REQUEST, "empty email");
 
     return service.existsUserByEmail(email)
         ? ResponseEntity.ok().build()
@@ -44,8 +48,10 @@ public class UserController {
 
   @PostMapping(path = "/login")
   public ResponseEntity<User> login(@RequestBody User user) {
-    if (user.getEmail().isEmpty()) return ResponseEntity.badRequest().build();
-    if (user.getPassword().isEmpty()) return ResponseEntity.badRequest().build();
+    log.info("login came");
+    if (user.getEmail().isEmpty()) throw new ApiException(HttpStatus.BAD_REQUEST, "email empty");
+    if (user.getPassword().isEmpty())
+      throw new ApiException(HttpStatus.BAD_REQUEST, "password empty");
 
     Optional<User> userOpt = service.login(user.getEmail(), user.getPassword());
     return userOpt.isPresent()
@@ -58,15 +64,8 @@ public class UserController {
   @ResponseBody
   public ResponseEntity<User> getUser(@PathVariable long idx) {
     Optional<User> userOpt = service.getUser(idx);
-    if (userOpt.isEmpty()) return ResponseEntity.notFound().build();
+    if (userOpt.isEmpty()) throw new ApiException(HttpStatus.NOT_FOUND, "no match user idx");
     return ResponseEntity.ok(userOpt.get());
-  }
-
-  // 사용자 리스트 정보 가져오기
-  @GetMapping(path = "users")
-  @ResponseBody
-  public List<User> getUsers() {
-    return service.getUsers();
   }
 
   // 사용자 삭제
