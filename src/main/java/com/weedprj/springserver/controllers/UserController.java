@@ -26,7 +26,7 @@ public class UserController {
 
   // 중복된 이메일 확인
   @GetMapping(path = "/email/{email}")
-  public ResponseEntity<Void> exitsUserByEmail(@PathVariable String email) {
+  public ResponseEntity<Void> exitsUserByEmail(@PathVariable String email) throws ApiException {
     if (email.isEmpty()) throw new ApiException(HttpStatus.BAD_REQUEST, "empty email");
 
     return service.existsUserByEmail(email)
@@ -47,7 +47,7 @@ public class UserController {
   }
 
   @PostMapping(path = "/login")
-  public ResponseEntity<User> login(@RequestBody User user) {
+  public ResponseEntity<User> login(@RequestBody User user) throws ApiException {
     log.info("login came");
     if (user.getEmail().isEmpty()) throw new ApiException(HttpStatus.BAD_REQUEST, "email empty");
     if (user.getPassword().isEmpty())
@@ -62,7 +62,8 @@ public class UserController {
   // 단일 사용자 정보 가져오기
   @GetMapping(path = "/{idx}")
   @ResponseBody
-  public ResponseEntity<User> getUser(@PathVariable long idx) {
+  public ResponseEntity<User> getUser(@PathVariable long idx) throws Exception {
+    if (idx == 1l) throw new Exception("yes");
     Optional<User> userOpt = service.getUser(idx);
     if (userOpt.isEmpty()) throw new ApiException(HttpStatus.NOT_FOUND, "no match user idx");
     return ResponseEntity.ok(userOpt.get());
