@@ -15,5 +15,7 @@ public interface UserServicePort {
 
   boolean existsUserByEmail(String email);
 
+  void uploadProfile(String name, String img, String firebase_token);
+
   List<User> getUsers();
 }
