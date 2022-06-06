@@ -35,7 +35,7 @@ public class User extends BaseEntity {
   @Column(name = "img_url")
   private String imgUrl;
 
-  public Long getIdx() {
+  public long getIdx() {
     return idx;
   }
 
@@ -53,5 +53,21 @@ public class User extends BaseEntity {
 
   public void setPassword(String password) {
     this.password = password;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public String getImgUrl() {
+    return imgUrl;
+  }
+
+  public void setImgUrl(String imgUrl) {
+    this.imgUrl = imgUrl;
   }
 }
