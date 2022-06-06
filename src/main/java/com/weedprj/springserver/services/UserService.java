@@ -41,4 +41,10 @@ public class UserService implements UserServicePort {
   public Optional<User> login(String email, String password) {
     return repo.login(email, password);
   }
+
+  @Override
+  public void uploadProfile(String name, String img, String firebase_token) {
+    // TODO Auto-generated method stub
+
+  }
 }
