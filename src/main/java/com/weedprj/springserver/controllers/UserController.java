@@ -3,7 +3,9 @@ package com.weedprj.springserver.controllers;
 import com.weedprj.springserver.domain.user.User;
 import com.weedprj.springserver.ports.service.UserServicePort;
 import com.weedprj.springserver.util.exception.ApiException;
+import java.util.Map;
 import java.util.Optional;
+import javax.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,14 +43,27 @@ public class UserController {
   }
 
   // 사용자 프로필 정보 저장
+  @Transactional
   @PostMapping(path = "/profile")
-  public ResponseEntity<Void> uploadProfile(@RequestBody User user) {
+  public ResponseEntity<Void> uploadProfile(@RequestBody Map<String, String> req) {
+    if (req.containsKey("name")) throw new ApiException(HttpStatus.BAD_REQUEST, "emtpy name key");
+    if (req.containsKey("img")) throw new ApiException(HttpStatus.BAD_REQUEST, "emtpy img key");
+    if (req.containsKey("firebase_token"))
+      throw new ApiException(HttpStatus.BAD_REQUEST, "empty firebase_token key");
+
+    String name = req.get("name");
+    String img = req.get("img");
+    String firebase_token = req.get("firebase_token");
+
+    if (name.isEmpty()) throw new ApiException(HttpStatus.BAD_REQUEST, "emtpy name");
+    if (img.isEmpty()) throw new ApiException(HttpStatus.BAD_REQUEST, "emtpy img");
+    if (firebase_token.isEmpty()) throw new ApiException(HttpStatus.BAD_REQUEST, "emtpy img");
+    service.uploadProfile(name, img, firebase_token);
     return ResponseEntity.accepted().build();
   }
 
   @PostMapping(path = "/login")
   public ResponseEntity<User> login(@RequestBody User user) throws ApiException {
-    log.info("login came");
     if (user.getEmail().isEmpty()) throw new ApiException(HttpStatus.BAD_REQUEST, "email empty");
     if (user.getPassword().isEmpty())
       throw new ApiException(HttpStatus.BAD_REQUEST, "password empty");
@@ -63,15 +78,15 @@ public class UserController {
   @GetMapping(path = "/{idx}")
   @ResponseBody
   public ResponseEntity<User> getUser(@PathVariable long idx) throws Exception {
-    if (idx == 1l) throw new Exception("yes");
     Optional<User> userOpt = service.getUser(idx);
     if (userOpt.isEmpty()) throw new ApiException(HttpStatus.NOT_FOUND, "no match user idx");
     return ResponseEntity.ok(userOpt.get());
   }
 
   // 사용자 삭제
+  @Transactional
   @DeleteMapping(path = "/{idx}")
-  public void deleteUser(@PathVariable long userIdx) {
-    service.deleteUser(userIdx);
+  public void deleteUser(@PathVariable long idx) {
+    service.deleteUser(idx);
   }
 }
