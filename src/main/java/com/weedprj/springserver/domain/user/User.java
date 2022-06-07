@@ -20,7 +20,6 @@ public class User extends BaseEntity {
 
   @Id
   @GeneratedValue(generator = "user_seq", strategy = GenerationType.SEQUENCE)
-  @Column(updatable = false)
   private long idx;
 
   @Column(nullable = false, unique = true)
