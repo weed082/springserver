@@ -17,5 +17,5 @@ public interface UserRepoPort {
 
   void delete(long idx);
 
-  void updateProfile(int idx, String img, String name);
+  void updateProfile(long idx, String name, String imgUrl);
 }
