@@ -43,8 +43,7 @@ public class UserService implements UserServicePort {
   }
 
   @Override
-  public void uploadProfile(String name, String img, String firebase_token) {
-    // TODO Auto-generated method stub
-
+  public void uploadProfile(long idx, String name, String img, String firebase_token) {
+    repo.updateProfile(idx, name, img);
   }
 }
