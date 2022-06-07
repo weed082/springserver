@@ -21,12 +21,40 @@ public class Message extends BaseEntity {
   @GeneratedValue(generator = "message_seq", strategy = GenerationType.SEQUENCE)
   private long idx;
 
-  @Column(name = "user_idx")
+  @Column(name = "user_idx", updatable = false)
   private long userIdx;
 
-  @Column(name = "room_idx")
+  @Column(name = "room_idx", updatable = false)
   private long roomIdx;
 
   @Column(name = "message")
   private String message;
+
+  public long getIdx() {
+    return idx;
+  }
+
+  public long getUserIdx() {
+    return userIdx;
+  }
+
+  public void setUserIdx(long userIdx) {
+    this.userIdx = userIdx;
+  }
+
+  public long getRoomIdx() {
+    return roomIdx;
+  }
+
+  public void setRoomIdx(long roomIdx) {
+    this.roomIdx = roomIdx;
+  }
+
+  public String getMessage() {
+    return message;
+  }
+
+  public void setMessage(String message) {
+    this.message = message;
+  }
 }

@@ -1,6 +1,7 @@
 package com.weedprj.springserver.domain.chat;
 
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,7 +21,10 @@ public class Room {
   @GeneratedValue(generator = "room_seq", strategy = GenerationType.SEQUENCE)
   private long idx;
 
+  @Column(name = "name")
   private String name;
+
+  @Column(name = "participants")
   private List<Integer> participants;
 
   public long getIdx() {
