@@ -38,8 +38,8 @@ public class UserController {
 
   // 사용자 저장
   @PostMapping
-  public ResponseEntity<Long> register(@RequestBody User user) {
-    return ResponseEntity.ok(service.register(user).getIdx());
+  public ResponseEntity<User> register(@RequestBody User user) {
+    return ResponseEntity.ok(service.register(user));
   }
 
   // 사용자 프로필 정보 저장
@@ -88,5 +88,10 @@ public class UserController {
   @DeleteMapping(path = "/{idx}")
   public void deleteUser(@PathVariable long idx) {
     service.deleteUser(idx);
+  }
+
+  @GetMapping(path = "s")
+  public void getUsers() {
+    service.getUsers();
   }
 }
