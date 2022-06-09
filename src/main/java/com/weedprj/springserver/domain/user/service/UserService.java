@@ -7,6 +7,7 @@ import com.weedprj.springserver.domain.user.port.UserServicePort;
 import com.weedprj.springserver.global.error.ApiException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,8 +36,10 @@ public class UserService implements UserServicePort {
   }
 
   @Override
-  public List<User> getUsers() {
-    return repo.getUsers();
+  public List<UserDto.Info> getUsers() {
+    return repo.getUsers().stream()
+        .map(user -> mapper.map(user, UserDto.Info.class))
+        .collect(Collectors.toList());
   }
 
   @Override

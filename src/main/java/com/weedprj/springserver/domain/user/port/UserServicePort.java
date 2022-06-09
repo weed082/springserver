@@ -1,7 +1,6 @@
 package com.weedprj.springserver.domain.user.port;
 
 import com.weedprj.springserver.domain.user.dto.UserDto;
-import com.weedprj.springserver.domain.user.entity.User;
 import java.util.List;
 
 public interface UserServicePort {
@@ -17,5 +16,5 @@ public interface UserServicePort {
 
   void uploadProfile(UserDto.ProfileReq req);
 
-  List<User> getUsers();
+  List<UserDto.Info> getUsers();
 }

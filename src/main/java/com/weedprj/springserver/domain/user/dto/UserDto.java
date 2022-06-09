@@ -1,5 +1,7 @@
 package com.weedprj.springserver.domain.user.dto;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,9 +24,9 @@ public class UserDto {
 
   @Getter
   public static class RegisterReq {
-    private String email;
-    private String password;
-    private String firebaseToken;
+    @Email private String email;
+    @NotEmpty private String password;
+    @NotEmpty private String firebaseToken;
   }
 
   @Getter
@@ -34,8 +36,8 @@ public class UserDto {
 
   @Getter
   public static class LoginReq {
-    private String email;
-    private String password;
+    @Email private String email;
+    @NotEmpty private String password;
   }
 
   @Getter
