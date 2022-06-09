@@ -5,7 +5,7 @@ import com.weedprj.springserver.domain.user.entity.User;
 import java.util.List;
 
 public interface UserServicePort {
-  void register(UserDto.RegisterReq req);
+  UserDto.RegisterRes register(UserDto.RegisterReq req);
 
   void deleteUser(long idx);
 

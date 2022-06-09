@@ -1,7 +1,7 @@
 package com.weedprj.springserver.domain.user.service;
 
-import com.weedprj.springserver.domain.user.domain.User;
 import com.weedprj.springserver.domain.user.dto.UserDto;
+import com.weedprj.springserver.domain.user.entity.User;
 import com.weedprj.springserver.domain.user.port.UserRepoPort;
 import com.weedprj.springserver.domain.user.port.UserServicePort;
 import com.weedprj.springserver.global.error.ApiException;
@@ -18,8 +18,8 @@ public class UserService implements UserServicePort {
   @Autowired private ModelMapper mapper;
 
   @Override
-  public void register(UserDto.RegisterReq req) {
-    repo.register(req);
+  public UserDto.RegisterRes register(UserDto.RegisterReq req) {
+    return mapper.map(repo.register(req), UserDto.RegisterRes.class);
   }
 
   @Override

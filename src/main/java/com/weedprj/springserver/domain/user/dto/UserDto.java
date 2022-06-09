@@ -13,6 +13,7 @@ public class UserDto {
   @Builder
   @Getter
   public static class Info {
+    private long idx;
     private String email;
     private String name;
     private String imgUrl;
@@ -24,6 +25,11 @@ public class UserDto {
     private String email;
     private String password;
     private String firebaseToken;
+  }
+
+  @Getter
+  public static class RegisterRes {
+    private long idx;
   }
 
   @Getter

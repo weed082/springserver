@@ -16,8 +16,8 @@ public class UserRepository implements UserRepoPort {
   @Autowired private ModelMapper mapper;
 
   @Override
-  public void register(UserDto.RegisterReq req) {
-    jpa.save(mapper.map(req, User.class));
+  public User register(UserDto.RegisterReq req) {
+    return jpa.save(mapper.map(req, User.class));
   }
 
   @Override
