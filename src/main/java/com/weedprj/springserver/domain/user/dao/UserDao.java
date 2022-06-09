@@ -1,6 +1,6 @@
 package com.weedprj.springserver.domain.user.dao;
 
-import com.weedprj.springserver.domain.user.domain.User;
+import com.weedprj.springserver.domain.user.entity.User;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

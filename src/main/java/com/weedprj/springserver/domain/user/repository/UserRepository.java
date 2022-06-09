@@ -1,8 +1,8 @@
 package com.weedprj.springserver.domain.user.repository;
 
 import com.weedprj.springserver.domain.user.dao.UserDao;
-import com.weedprj.springserver.domain.user.domain.User;
 import com.weedprj.springserver.domain.user.dto.UserDto;
+import com.weedprj.springserver.domain.user.entity.User;
 import com.weedprj.springserver.domain.user.port.UserRepoPort;
 import java.util.List;
 import java.util.Optional;

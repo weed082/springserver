@@ -1,4 +1,4 @@
-package com.weedprj.springserver.domain.user.domain;
+package com.weedprj.springserver.domain.user.entity;
 
 import com.weedprj.springserver.global.common.domain.BaseEntity;
 import javax.persistence.Column;

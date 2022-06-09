@@ -1,7 +1,7 @@
 package com.weedprj.springserver.domain.user.port;
 
-import com.weedprj.springserver.domain.user.domain.User;
 import com.weedprj.springserver.domain.user.dto.UserDto;
+import com.weedprj.springserver.domain.user.entity.User;
 import java.util.List;
 import java.util.Optional;
 
