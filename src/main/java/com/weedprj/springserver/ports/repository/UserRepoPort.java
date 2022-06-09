@@ -1,6 +1,6 @@
 package com.weedprj.springserver.ports.repository;
 
-import com.weedprj.springserver.domain.user.User;
+import com.weedprj.springserver.entity.user.User;
 import java.util.List;
 import java.util.Optional;
 

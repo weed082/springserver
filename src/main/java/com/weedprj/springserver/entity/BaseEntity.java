@@ -1,4 +1,4 @@
-package com.weedprj.springserver.domain;
+package com.weedprj.springserver.entity;
 
 import java.time.LocalDateTime;
 import javax.persistence.Column;

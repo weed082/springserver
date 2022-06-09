@@ -1,6 +1,6 @@
 package com.weedprj.springserver.controllers;
 
-import com.weedprj.springserver.domain.user.User;
+import com.weedprj.springserver.entity.user.User;
 import com.weedprj.springserver.ports.service.UserServicePort;
 import com.weedprj.springserver.util.exception.ApiException;
 import java.util.Map;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -44,21 +45,10 @@ public class UserController {
 
   // 사용자 프로필 정보 저장
   @Transactional
-  @PostMapping(path = "/profile")
-  public ResponseEntity<Void> uploadProfile(@RequestBody Map<String, String> req) {
-    if (req.containsKey("name")) throw new ApiException(HttpStatus.BAD_REQUEST, "emtpy name key");
-    if (req.containsKey("img")) throw new ApiException(HttpStatus.BAD_REQUEST, "emtpy img key");
-    if (req.containsKey("firebase_token"))
-      throw new ApiException(HttpStatus.BAD_REQUEST, "empty firebase_token key");
+  @PutMapping(path = "/profile")
+  public ResponseEntity<Long> uploadProfile(@RequestBody Map<String, Object> req) {
 
-    String name = req.get("name");
-    String img = req.get("img");
-    String firebase_token = req.get("firebase_token");
-
-    if (name.isEmpty()) throw new ApiException(HttpStatus.BAD_REQUEST, "emtpy name");
-    if (img.isEmpty()) throw new ApiException(HttpStatus.BAD_REQUEST, "emtpy img");
-    if (firebase_token.isEmpty()) throw new ApiException(HttpStatus.BAD_REQUEST, "emtpy img");
-    service.uploadProfile(name, img, firebase_token);
+    // service.uploadProfile(name, img, firebase_token);
     return ResponseEntity.accepted().build();
   }
 
@@ -90,7 +80,7 @@ public class UserController {
     service.deleteUser(idx);
   }
 
-  @GetMapping(path = "s")
+  @GetMapping(path = "/s")
   public void getUsers() {
     service.getUsers();
   }

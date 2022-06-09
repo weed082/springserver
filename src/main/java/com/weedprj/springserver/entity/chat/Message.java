@@ -1,6 +1,6 @@
-package com.weedprj.springserver.domain.chat;
+package com.weedprj.springserver.entity.chat;
 
-import com.weedprj.springserver.domain.BaseEntity;
+import com.weedprj.springserver.entity.BaseEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

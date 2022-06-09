@@ -1,6 +1,6 @@
 package com.weedprj.springserver.repositories;
 
-import com.weedprj.springserver.domain.user.User;
+import com.weedprj.springserver.entity.user.User;
 import com.weedprj.springserver.ports.repository.UserRepoPort;
 import java.util.List;
 import java.util.Optional;
@@ -16,7 +16,7 @@ interface UserJpa extends JpaRepository<User, Long> {
 
   Optional<User> findByEmailAndPassword(String email, String password);
 
-  @Query("UPDATE user SET name=:name, img_url=:imgUrl WHERE idx=:idx")
+  @Query("UPDATE User SET name=:name, img_url=:imgUrl WHERE idx=:idx")
   void updateProfile(
       @Param(value = "idx") long idx,
       @Param(value = "name") String name,

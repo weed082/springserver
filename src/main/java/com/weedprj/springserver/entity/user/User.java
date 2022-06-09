@@ -1,6 +1,6 @@
-package com.weedprj.springserver.domain.user;
+package com.weedprj.springserver.entity.user;
 
-import com.weedprj.springserver.domain.BaseEntity;
+import com.weedprj.springserver.entity.BaseEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,7 +17,6 @@ import javax.persistence.Table;
     initialValue = 1,
     allocationSize = 1)
 public class User extends BaseEntity {
-
   @Id
   @GeneratedValue(generator = "user_seq", strategy = GenerationType.SEQUENCE)
   private long idx;
