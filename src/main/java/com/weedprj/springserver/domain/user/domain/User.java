@@ -1,6 +1,6 @@
-package com.weedprj.springserver.entity.user;
+package com.weedprj.springserver.domain.user.domain;
 
-import com.weedprj.springserver.entity.BaseEntity;
+import com.weedprj.springserver.global.common.domain.BaseEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import lombok.Getter;
 
 @Entity
 @Table(name = "user")
@@ -16,6 +17,7 @@ import javax.persistence.Table;
     sequenceName = "user_seq",
     initialValue = 1,
     allocationSize = 1)
+@Getter
 public class User extends BaseEntity {
   @Id
   @GeneratedValue(generator = "user_seq", strategy = GenerationType.SEQUENCE)
@@ -33,39 +35,6 @@ public class User extends BaseEntity {
   @Column(name = "img_url")
   private String imgUrl;
 
-  public long getIdx() {
-    return idx;
-  }
-
-  public String getEmail() {
-    return email;
-  }
-
-  public void setEmail(String email) {
-    this.email = email;
-  }
-
-  public String getPassword() {
-    return password;
-  }
-
-  public void setPassword(String password) {
-    this.password = password;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public String getImgUrl() {
-    return imgUrl;
-  }
-
-  public void setImgUrl(String imgUrl) {
-    this.imgUrl = imgUrl;
-  }
+  @Column(name = "firebase_token")
+  private String firebaseToken;
 }

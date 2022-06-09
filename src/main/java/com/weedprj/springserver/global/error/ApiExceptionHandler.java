@@ -1,4 +1,4 @@
-package com.weedprj.springserver.util.exception;
+package com.weedprj.springserver.global.error;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;

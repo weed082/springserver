@@ -1,4 +1,4 @@
-package com.weedprj.springserver.util.exception;
+package com.weedprj.springserver.global.error;
 
 import org.springframework.http.HttpStatus;
 

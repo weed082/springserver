@@ -1,6 +1,6 @@
-package com.weedprj.springserver.entity.chat;
+package com.weedprj.springserver.domain.chat.domain;
 
-import com.weedprj.springserver.entity.BaseEntity;
+import com.weedprj.springserver.global.common.domain.BaseEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,7 +8,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
+@EqualsAndHashCode(callSuper = false)
+@Getter
 @Entity
 @Table(name = "message")
 @SequenceGenerator(
@@ -29,32 +33,4 @@ public class Message extends BaseEntity {
 
   @Column(name = "message")
   private String message;
-
-  public long getIdx() {
-    return idx;
-  }
-
-  public long getUserIdx() {
-    return userIdx;
-  }
-
-  public void setUserIdx(long userIdx) {
-    this.userIdx = userIdx;
-  }
-
-  public long getRoomIdx() {
-    return roomIdx;
-  }
-
-  public void setRoomIdx(long roomIdx) {
-    this.roomIdx = roomIdx;
-  }
-
-  public String getMessage() {
-    return message;
-  }
-
-  public void setMessage(String message) {
-    this.message = message;
-  }
 }

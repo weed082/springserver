@@ -1,10 +1,9 @@
-package com.weedprj.springserver.controllers;
+package com.weedprj.springserver.domain.user.controller;
 
-import com.weedprj.springserver.entity.user.User;
-import com.weedprj.springserver.ports.service.UserServicePort;
-import com.weedprj.springserver.util.exception.ApiException;
+import com.weedprj.springserver.domain.user.dto.UserDto;
+import com.weedprj.springserver.domain.user.port.UserServicePort;
+import com.weedprj.springserver.global.error.ApiException;
 import java.util.Map;
-import java.util.Optional;
 import javax.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("api/v1/user")
 public class UserController {
-  private final Logger log = LoggerFactory.getLogger("UserController");
+  private final Logger log = LoggerFactory.getLogger(UserController.class);
   @Autowired private UserServicePort service;
 
   // 중복된 이메일 확인
@@ -39,8 +38,8 @@ public class UserController {
 
   // 사용자 저장
   @PostMapping
-  public ResponseEntity<User> register(@RequestBody User user) {
-    return ResponseEntity.ok(service.register(user));
+  public ResponseEntity<UserDto.Info> register(@RequestBody UserDto.RegisterReq req) {
+    return ResponseEntity.ok().build();
   }
 
   // 사용자 프로필 정보 저장
@@ -53,24 +52,19 @@ public class UserController {
   }
 
   @PostMapping(path = "/login")
-  public ResponseEntity<User> login(@RequestBody User user) throws ApiException {
-    if (user.getEmail().isEmpty()) throw new ApiException(HttpStatus.BAD_REQUEST, "email empty");
-    if (user.getPassword().isEmpty())
+  public ResponseEntity<UserDto.Info> login(@RequestBody UserDto.LoginReq req) throws ApiException {
+    if (req.getEmail().isEmpty()) throw new ApiException(HttpStatus.BAD_REQUEST, "email empty");
+    if (req.getPassword().isEmpty())
       throw new ApiException(HttpStatus.BAD_REQUEST, "password empty");
 
-    Optional<User> userOpt = service.login(user.getEmail(), user.getPassword());
-    return userOpt.isPresent()
-        ? ResponseEntity.ok(userOpt.get())
-        : ResponseEntity.notFound().build();
+    return ResponseEntity.ok(service.login(req));
   }
 
   // 단일 사용자 정보 가져오기
   @GetMapping(path = "/{idx}")
   @ResponseBody
-  public ResponseEntity<User> getUser(@PathVariable long idx) throws Exception {
-    Optional<User> userOpt = service.getUser(idx);
-    if (userOpt.isEmpty()) throw new ApiException(HttpStatus.NOT_FOUND, "no match user idx");
-    return ResponseEntity.ok(userOpt.get());
+  public ResponseEntity<UserDto.Info> getUser(@PathVariable long idx) throws Exception {
+    return ResponseEntity.ok(service.getUser(idx));
   }
 
   // 사용자 삭제

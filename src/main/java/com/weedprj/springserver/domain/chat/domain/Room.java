@@ -1,8 +1,8 @@
-package com.weedprj.springserver.entity.chat;
+package com.weedprj.springserver.domain.chat.domain;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.weedprj.springserver.entity.BaseEntity;
+import com.weedprj.springserver.global.common.domain.BaseEntity;
 import java.util.Arrays;
 import java.util.List;
 import javax.persistence.AttributeConverter;
@@ -15,9 +15,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+@EqualsAndHashCode(callSuper = false)
+@Getter
 @Entity
 @Table(name = "room")
 @SequenceGenerator(
@@ -36,26 +40,6 @@ public class Room extends BaseEntity {
   @Column(name = "participants", columnDefinition = "json")
   @Convert(converter = JsonArrayConverter.class)
   private List<Integer> participants;
-
-  public long getIdx() {
-    return idx;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public List<Integer> getParticipants() {
-    return participants;
-  }
-
-  public void setParticipants(List<Integer> participants) {
-    this.participants = participants;
-  }
 }
 
 @Converter
