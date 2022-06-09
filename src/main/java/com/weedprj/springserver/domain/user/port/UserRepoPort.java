@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface UserRepoPort {
   boolean existsUserByEmail(String email);
 
-  void register(UserDto.RegisterReq req);
+  User register(UserDto.RegisterReq req);
 
   Optional<User> getUser(long idx);
 
