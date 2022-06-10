@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "user")
@@ -17,6 +18,7 @@ import lombok.Getter;
     sequenceName = "user_seq",
     initialValue = 1,
     allocationSize = 1)
+@Setter
 @Getter
 public class User extends BaseEntity {
   @Id

@@ -1,19 +1,17 @@
 package com.weedprj.springserver.domain.user.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import javax.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 public class UserDto {
   @Data
-  @AllArgsConstructor
-  @NoArgsConstructor
-  @Builder
   @Getter
+  @Setter
   public static class Info {
     private long idx;
     private String email;
@@ -22,28 +20,36 @@ public class UserDto {
     private String firebaseToken;
   }
 
+  // user register request
   @Getter
   public static class RegisterReq {
     @Email private String email;
     @NotEmpty private String password;
-    @NotEmpty private String firebaseToken;
+
+    @JsonProperty("firebase_token")
+    @NotEmpty
+    private String firebaseToken;
   }
 
+  // user register response
+  @Setter
   @Getter
   public static class RegisterRes {
     private long idx;
   }
 
+  // user login request
+  @Setter
   @Getter
   public static class LoginReq {
     @Email private String email;
     @NotEmpty private String password;
   }
 
+  // user profile change request
   @Getter
   public static class ProfileReq {
-    private long idx;
-    private String name;
-    private String imgUrl;
+    @NotNull private long idx;
+    @NotEmpty private String name;
   }
 }

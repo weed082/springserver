@@ -7,6 +7,8 @@ import com.weedprj.springserver.domain.user.port.UserRepoPort;
 import java.util.List;
 import java.util.Optional;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Repository;
 public class UserRepository implements UserRepoPort {
   @Autowired private UserDao jpa;
   @Autowired private ModelMapper mapper;
+  private final Logger log = LoggerFactory.getLogger(UserRepoPort.class);
 
   @Override
   public User register(UserDto.RegisterReq req) {
@@ -48,6 +51,6 @@ public class UserRepository implements UserRepoPort {
 
   @Override
   public void updateProfile(UserDto.ProfileReq req) {
-    jpa.updateProfile(req.getIdx(), req.getName(), req.getImgUrl());
+    // jpa.updateProfile(req.getIdx(), req.getName(), req.getImgUrl());
   }
 }
