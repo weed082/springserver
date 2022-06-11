@@ -1,6 +1,10 @@
 package com.weedprj.springserver.domain.user.service;
 
 import com.weedprj.springserver.domain.user.dto.UserDto;
+import com.weedprj.springserver.domain.user.dto.UserDto.Info;
+import com.weedprj.springserver.domain.user.dto.UserDto.LoginReq;
+import com.weedprj.springserver.domain.user.dto.UserDto.RegisterReq;
+import com.weedprj.springserver.domain.user.dto.UserDto.RegisterRes;
 import com.weedprj.springserver.domain.user.entity.User;
 import com.weedprj.springserver.domain.user.port.UserRepoPort;
 import com.weedprj.springserver.domain.user.port.UserServicePort;
@@ -9,6 +13,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -18,28 +24,27 @@ public class UserService implements UserServicePort {
   @Autowired private UserRepoPort repo;
   @Autowired private ModelMapper mapper;
 
+  private Logger log = LoggerFactory.getLogger(UserService.class);
+
+  /** --------------------- User --------------------- */
   @Override
-  public UserDto.RegisterRes register(UserDto.RegisterReq req) {
-    return mapper.map(repo.register(req), UserDto.RegisterRes.class);
+  public RegisterRes register(RegisterReq req) {
+    User user = mapper.map(req, User.class);
+    return mapper.map(user, RegisterRes.class);
   }
 
   @Override
-  public UserDto.Info getUser(long idx) {
+  public Info getUser(long idx) {
     Optional<User> userOpt = repo.getUser(idx);
     if (userOpt.isEmpty()) throw new ApiException(HttpStatus.NOT_FOUND, "no match user idx");
-    return mapper.map(repo.getUser(idx), UserDto.Info.class);
+    return mapper.map(userOpt.get(), Info.class);
   }
 
   @Override
-  public boolean existsUserByEmail(String email) {
-    return repo.existsUserByEmail(email);
-  }
-
-  @Override
-  public List<UserDto.Info> getUsers() {
-    return repo.getUsers().stream()
-        .map(user -> mapper.map(user, UserDto.Info.class))
-        .collect(Collectors.toList());
+  public Info findUserByEmail(String email) {
+    Optional<User> userOpt = repo.findUserByEmail(email);
+    if (userOpt.isEmpty()) throw new ApiException(HttpStatus.NOT_FOUND, "no match user");
+    return mapper.map(userOpt.get(), Info.class);
   }
 
   @Override
@@ -48,14 +53,30 @@ public class UserService implements UserServicePort {
   }
 
   @Override
-  public UserDto.Info login(UserDto.LoginReq req) {
-    Optional<User> userOpt = repo.login(req);
+  public Info login(LoginReq req) {
+    Optional<User> userOpt = repo.login(req.getEmail(), req.getPassword());
     if (userOpt.isEmpty()) throw new ApiException(HttpStatus.NOT_FOUND, "no match user");
-    return mapper.map(userOpt.get(), UserDto.Info.class);
+    return mapper.map(userOpt.get(), Info.class);
   }
 
   @Override
   public void updateProfile(UserDto.ProfileReq req) {
-    repo.updateProfile(req);
+    repo.updateProfile(req.getIdx(), req.getName(), req.getImageIdx());
+  }
+
+  /** --------------------- Friend --------------------- */
+  @Override
+  public void addFriend(long userIdx, long friendIdx) {
+    Optional<User> friendOpt = repo.getUser(friendIdx);
+    if (friendOpt.isEmpty()) throw new ApiException(HttpStatus.NOT_FOUND, "no match user");
+    repo.addFriend(userIdx, friendIdx);
+  }
+
+  @Override
+  public List<Info> getFriends(long userIdx, int page, int limit) {
+    int offset = (page - 1) * limit;
+    return repo.getFriends(userIdx, limit, offset).stream()
+        .map(user -> mapper.map(user, Info.class))
+        .collect(Collectors.toList());
   }
 }

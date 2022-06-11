@@ -1,57 +1,57 @@
 package com.weedprj.springserver.domain.user.repository;
 
 import com.weedprj.springserver.domain.user.dao.UserDao;
-import com.weedprj.springserver.domain.user.dto.UserDto;
 import com.weedprj.springserver.domain.user.entity.User;
 import com.weedprj.springserver.domain.user.port.UserRepoPort;
 import java.util.List;
 import java.util.Optional;
-import org.modelmapper.ModelMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class UserRepository implements UserRepoPort {
-  @Autowired private UserDao jpa;
-  @Autowired private ModelMapper mapper;
-  private final Logger log = LoggerFactory.getLogger(UserRepository.class);
+  @Autowired private UserDao userDao;
 
+  /** --------------------- User --------------------- */
   @Override
-  public User register(UserDto.RegisterReq req) {
-    return jpa.save(mapper.map(req, User.class));
+  public User register(User user) {
+    return userDao.save(user);
   }
 
   @Override
   public Optional<User> getUser(long idx) {
-    return jpa.findById(idx);
+    return userDao.findById(idx);
   }
 
   @Override
-  public boolean existsUserByEmail(String email) {
-    return jpa.existsUserByEmail(email);
-  }
-
-  @Override
-  public List<User> getUsers() {
-    return jpa.findAll();
+  public Optional<User> findUserByEmail(String email) {
+    return userDao.findByEmail(email);
   }
 
   // 로그인
   @Override
-  public Optional<User> login(UserDto.LoginReq req) {
-    return jpa.findByEmailAndPassword(req.getEmail(), req.getPassword());
+  public Optional<User> login(String email, String password) {
+    return userDao.findByEmailAndPassword(email, password);
   }
 
   @Override
   public void deleteUser(long idx) {
-    jpa.deleteById(idx);
+    userDao.deleteById(idx);
   }
 
   @Override
-  public void updateProfile(UserDto.ProfileReq req) {
-    log.info("{} {} {}", req.getIdx(), req.getName(), req.getImageIdx());
-    jpa.updateProfile(req.getIdx(), req.getName(), req.getImageIdx());
+  public void updateProfile(long idx, String name, String imageIdx) {
+    userDao.updateProfile(idx, name, imageIdx);
+  }
+
+  /** --------------------- Friend --------------------- */
+  @Override
+  public List<User> getFriends(long userIdx, int limit, int offset) {
+    return userDao.getFriends(userIdx, limit, offset);
+  }
+
+  @Override
+  public void addFriend(long userIdx, long friendIdx) {
+    userDao.addFriend(userIdx, friendIdx);
   }
 }

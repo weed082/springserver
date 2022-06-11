@@ -4,17 +4,21 @@ import com.weedprj.springserver.domain.user.dto.UserDto;
 import java.util.List;
 
 public interface UserServicePort {
+  /** --------------------- User --------------------- */
   UserDto.RegisterRes register(UserDto.RegisterReq req);
-
-  void deleteUser(long idx);
 
   UserDto.Info getUser(long idx);
 
+  UserDto.Info findUserByEmail(String email);
+
   UserDto.Info login(UserDto.LoginReq req);
 
-  boolean existsUserByEmail(String email);
+  void deleteUser(long idx); // 사용자 삭제
 
-  void updateProfile(UserDto.ProfileReq req);
+  void updateProfile(UserDto.ProfileReq req); // 사용자 프로필 업데이트
 
-  List<UserDto.Info> getUsers();
+  /** --------------------- Friend --------------------- */
+  void addFriend(long userIdx, long friendIdx);
+
+  List<UserDto.Info> getFriends(long userIdx, int page, int limit);
 }

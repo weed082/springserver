@@ -1,7 +1,11 @@
 package com.weedprj.springserver.domain.user.entity;
 
+import com.weedprj.springserver.global.common.converter.JsonArrayConverter;
 import com.weedprj.springserver.global.common.domain.BaseEntity;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,8 +22,8 @@ import lombok.Setter;
     sequenceName = "user_seq",
     initialValue = 1,
     allocationSize = 1)
-@Setter
 @Getter
+@Setter
 public class User extends BaseEntity {
   @Id
   @GeneratedValue(generator = "user_seq", strategy = GenerationType.SEQUENCE)
@@ -39,4 +43,10 @@ public class User extends BaseEntity {
 
   @Column(name = "firebase_token")
   private String firebaseToken;
+
+  @Column(columnDefinition = "json")
+  @Convert(converter = FriendsConverter.class)
+  private List<Long> friends = new ArrayList<>();
 }
+
+class FriendsConverter extends JsonArrayConverter<Long> {}
