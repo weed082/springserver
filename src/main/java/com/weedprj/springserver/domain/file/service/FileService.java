@@ -8,8 +8,6 @@ import com.weedprj.springserver.global.error.ApiException;
 import java.io.IOException;
 import java.util.Optional;
 import org.modelmapper.ModelMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -20,8 +18,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 public class FileService implements FileServicePort {
   @Autowired private FileRepository repo;
   @Autowired private ModelMapper mapper;
-
-  private final Logger log = LoggerFactory.getLogger(FileService.class);
 
   @Override
   public FileDto.Info upload(MultipartFile multipartFile) throws IOException {
