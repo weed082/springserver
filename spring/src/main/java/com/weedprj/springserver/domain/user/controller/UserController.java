@@ -29,7 +29,6 @@ public class UserController {
   @PostMapping("/user")
   @ResponseBody
   public UserDto.RegisterRes register(@RequestBody @Valid final UserDto.RegisterReq req) {
-    log.info("yes");
     return service.register(req);
   }
 
