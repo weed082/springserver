@@ -1,14 +1,10 @@
 package com.weedprj.springserver.domain.chat.domain;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.weedprj.springserver.global.common.converter.JsonArrayConverter;
 import com.weedprj.springserver.global.common.domain.BaseEntity;
-import java.util.Arrays;
 import java.util.List;
-import javax.persistence.AttributeConverter;
 import javax.persistence.Column;
 import javax.persistence.Convert;
-import javax.persistence.Converter;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,8 +13,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 @EqualsAndHashCode(callSuper = false)
 @Getter
@@ -38,32 +32,8 @@ public class Room extends BaseEntity {
   private String name;
 
   @Column(name = "participants", columnDefinition = "json")
-  @Convert(converter = JsonArrayConverter.class)
-  private List<Integer> participants;
+  @Convert(converter = ParticipantsConverter.class)
+  private List<Long> participants;
 }
 
-@Converter
-@Component
-class JsonArrayConverter implements AttributeConverter<List<Long>, String> {
-  @Autowired public static ObjectMapper mapper;
-
-  @Override
-  public String convertToDatabaseColumn(List<Long> attribute) {
-    try {
-      return mapper.writeValueAsString(attribute);
-    } catch (JsonProcessingException e) {
-      e.printStackTrace();
-      return null;
-    }
-  }
-
-  @Override
-  public List<Long> convertToEntityAttribute(String dbData) {
-    try {
-      return Arrays.asList(mapper.readValue(dbData, Long[].class));
-    } catch (JsonProcessingException e) {
-      e.printStackTrace();
-      return null;
-    }
-  }
-}
+class ParticipantsConverter extends JsonArrayConverter<Long> {}
