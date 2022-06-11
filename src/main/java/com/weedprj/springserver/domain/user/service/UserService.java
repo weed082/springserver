@@ -44,7 +44,7 @@ public class UserService implements UserServicePort {
 
   @Override
   public void deleteUser(long idx) {
-    repo.delete(idx);
+    repo.deleteUser(idx);
   }
 
   @Override
@@ -55,7 +55,7 @@ public class UserService implements UserServicePort {
   }
 
   @Override
-  public void uploadProfile(UserDto.ProfileReq req) {
+  public void updateProfile(UserDto.ProfileReq req) {
     repo.updateProfile(req);
   }
 }

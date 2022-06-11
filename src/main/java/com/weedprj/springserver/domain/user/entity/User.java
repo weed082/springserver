@@ -34,8 +34,8 @@ public class User extends BaseEntity {
   @Column(length = 100)
   private String name;
 
-  @Column(name = "img_url")
-  private String imgUrl;
+  @Column(name = "image_idx")
+  private String imageIdx;
 
   @Column(name = "firebase_token")
   private String firebaseToken;

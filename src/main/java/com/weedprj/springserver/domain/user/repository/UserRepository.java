@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
 public class UserRepository implements UserRepoPort {
   @Autowired private UserDao jpa;
   @Autowired private ModelMapper mapper;
-  private final Logger log = LoggerFactory.getLogger(UserRepoPort.class);
+  private final Logger log = LoggerFactory.getLogger(UserRepository.class);
 
   @Override
   public User register(UserDto.RegisterReq req) {
@@ -45,12 +45,13 @@ public class UserRepository implements UserRepoPort {
   }
 
   @Override
-  public void delete(long idx) {
+  public void deleteUser(long idx) {
     jpa.deleteById(idx);
   }
 
   @Override
   public void updateProfile(UserDto.ProfileReq req) {
-    // jpa.updateProfile(req.getIdx(), req.getName(), req.getImgUrl());
+    log.info("{} {} {}", req.getIdx(), req.getName(), req.getImageIdx());
+    jpa.updateProfile(req.getIdx(), req.getName(), req.getImageIdx());
   }
 }

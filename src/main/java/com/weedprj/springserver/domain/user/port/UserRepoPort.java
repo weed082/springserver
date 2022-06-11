@@ -16,7 +16,7 @@ public interface UserRepoPort {
 
   Optional<User> login(UserDto.LoginReq req);
 
-  void delete(long idx);
+  void deleteUser(long idx);
 
   void updateProfile(UserDto.ProfileReq req);
 }

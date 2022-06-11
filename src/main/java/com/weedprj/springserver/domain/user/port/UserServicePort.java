@@ -14,7 +14,7 @@ public interface UserServicePort {
 
   boolean existsUserByEmail(String email);
 
-  void uploadProfile(UserDto.ProfileReq req);
+  void updateProfile(UserDto.ProfileReq req);
 
   List<UserDto.Info> getUsers();
 }

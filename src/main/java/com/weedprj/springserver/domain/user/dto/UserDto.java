@@ -39,7 +39,6 @@ public class UserDto {
   }
 
   // user login request
-  @Setter
   @Getter
   public static class LoginReq {
     @Email private String email;
@@ -51,5 +50,9 @@ public class UserDto {
   public static class ProfileReq {
     @NotNull private long idx;
     @NotEmpty private String name;
+
+    @NotEmpty
+    @JsonProperty("image_idx")
+    private String imageIdx;
   }
 }
