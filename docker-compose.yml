@@ -3,8 +3,11 @@ services:
   nginx:
     build:
       context: nginx
+    environment:
+      WAS_PORT: ${WAS_PORT}
+      SERVER_PORT: ${SERVER_PORT}
     ports:
-      - 8080:8080
+      - ${SERVER_PORT}:${SERVER_PORT}
     depends_on:
       - app
 
@@ -16,9 +19,9 @@ services:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
-      REST_PORT: ${REST_PORT}
+      REST_PORT: ${WAS_PORT}
     ports:
-      - ${REST_PORT}:${REST_PORT}
+      - ${WAS_PORT}:${WAS_PORT}
     depends_on:
       - db
 
