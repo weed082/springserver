@@ -30,7 +30,7 @@ public class UserService implements UserServicePort {
   @Override
   public RegisterRes register(RegisterReq req) {
     User user = mapper.map(req, User.class);
-    return mapper.map(user, RegisterRes.class);
+    return mapper.map(repo.register(user), RegisterRes.class);
   }
 
   @Override

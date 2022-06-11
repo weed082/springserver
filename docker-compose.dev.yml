@@ -4,5 +4,5 @@ services:
     build:
       dockerfile: Dockerfile.dev
     volumes:
-      - ./src/:/app/src/
-      - ./build.gradle:/app/build.gradle
+      - ./spring/src/:/app/src/
+      - ./spring/build.gradle:/app/build.gradle
