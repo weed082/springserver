@@ -1,6 +1,10 @@
 package com.weedprj.springserver.domain.user.controller;
 
-import com.weedprj.springserver.domain.user.dto.UserDto;
+import com.weedprj.springserver.domain.user.dto.UserDto.LoginReq;
+import com.weedprj.springserver.domain.user.dto.UserDto.ProfileReq;
+import com.weedprj.springserver.domain.user.dto.UserDto.RegisterReq;
+import com.weedprj.springserver.domain.user.dto.UserDto.RegisterRes;
+import com.weedprj.springserver.domain.user.dto.UserDto.UserInfo;
 import com.weedprj.springserver.domain.user.port.UserServicePort;
 import java.util.List;
 import javax.transaction.Transactional;
@@ -28,32 +32,32 @@ public class UserController {
   // 사용자 저장
   @PostMapping("/user")
   @ResponseBody
-  public UserDto.RegisterRes register(@RequestBody @Valid final UserDto.RegisterReq req) {
+  public RegisterRes register(@RequestBody @Valid final RegisterReq req) {
     return service.register(req);
   }
 
   // 사용자 프로필 정보 저장
   @PutMapping("/user/profile")
-  public void uploadProfile(@RequestBody @Valid final UserDto.ProfileReq req) {
+  public void uploadProfile(@RequestBody @Valid final ProfileReq req) {
     service.updateProfile(req);
   }
 
   @PostMapping(path = "/user/login")
   @ResponseBody
-  public UserDto.Info login(@RequestBody @Valid UserDto.LoginReq req) {
+  public UserInfo login(@RequestBody @Valid LoginReq req) {
     return service.login(req);
   }
 
   // 단일 사용자 정보 가져오기
   @GetMapping("/user/{idx}")
   @ResponseBody
-  public UserDto.Info getUser(@PathVariable(required = true) long idx) {
+  public UserInfo getUser(@PathVariable(required = true) long idx) {
     return service.getUser(idx);
   }
 
   @GetMapping("/user/email/{email}")
   @ResponseBody
-  public UserDto.Info findUserByEmail(@PathVariable String email) {
+  public UserInfo findUserByEmail(@PathVariable String email) {
     return service.findUserByEmail(email);
   }
 
@@ -72,7 +76,7 @@ public class UserController {
 
   @GetMapping("/friends/user/{userIdx}/page/{page}")
   @ResponseBody
-  public List<UserDto.Info> getUsers(
+  public List<UserInfo> getUsers(
       @PathVariable(required = true) long userIdx,
       @PathVariable(required = true) int page,
       @RequestParam(required = false, defaultValue = "8") int limit) {

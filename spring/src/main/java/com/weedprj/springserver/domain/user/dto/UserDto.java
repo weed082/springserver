@@ -12,7 +12,7 @@ public class UserDto {
   @Data
   @Getter
   @Setter
-  public static class Info {
+  public static class UserInfo {
     private long idx;
     private String email;
     private String name;

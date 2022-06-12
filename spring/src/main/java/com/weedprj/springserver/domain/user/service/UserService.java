@@ -1,10 +1,10 @@
 package com.weedprj.springserver.domain.user.service;
 
 import com.weedprj.springserver.domain.user.dto.UserDto;
-import com.weedprj.springserver.domain.user.dto.UserDto.Info;
 import com.weedprj.springserver.domain.user.dto.UserDto.LoginReq;
 import com.weedprj.springserver.domain.user.dto.UserDto.RegisterReq;
 import com.weedprj.springserver.domain.user.dto.UserDto.RegisterRes;
+import com.weedprj.springserver.domain.user.dto.UserDto.UserInfo;
 import com.weedprj.springserver.domain.user.entity.User;
 import com.weedprj.springserver.domain.user.port.UserRepoPort;
 import com.weedprj.springserver.domain.user.port.UserServicePort;
@@ -34,17 +34,17 @@ public class UserService implements UserServicePort {
   }
 
   @Override
-  public Info getUser(long idx) {
+  public UserInfo getUser(long idx) {
     Optional<User> userOpt = repo.getUser(idx);
     if (userOpt.isEmpty()) throw new ApiException(HttpStatus.NOT_FOUND, "no match user idx");
-    return mapper.map(userOpt.get(), Info.class);
+    return mapper.map(userOpt.get(), UserInfo.class);
   }
 
   @Override
-  public Info findUserByEmail(String email) {
+  public UserInfo findUserByEmail(String email) {
     Optional<User> userOpt = repo.findUserByEmail(email);
     if (userOpt.isEmpty()) throw new ApiException(HttpStatus.NOT_FOUND, "no match user");
-    return mapper.map(userOpt.get(), Info.class);
+    return mapper.map(userOpt.get(), UserInfo.class);
   }
 
   @Override
@@ -53,10 +53,10 @@ public class UserService implements UserServicePort {
   }
 
   @Override
-  public Info login(LoginReq req) {
+  public UserInfo login(LoginReq req) {
     Optional<User> userOpt = repo.login(req.getEmail(), req.getPassword());
     if (userOpt.isEmpty()) throw new ApiException(HttpStatus.NOT_FOUND, "no match user");
-    return mapper.map(userOpt.get(), Info.class);
+    return mapper.map(userOpt.get(), UserInfo.class);
   }
 
   @Override
@@ -73,10 +73,10 @@ public class UserService implements UserServicePort {
   }
 
   @Override
-  public List<Info> getFriends(long userIdx, int page, int limit) {
+  public List<UserInfo> getFriends(long userIdx, int page, int limit) {
     int offset = (page - 1) * limit;
     return repo.getFriends(userIdx, limit, offset).stream()
-        .map(user -> mapper.map(user, Info.class))
+        .map(user -> mapper.map(user, UserInfo.class))
         .collect(Collectors.toList());
   }
 }
