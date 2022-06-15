@@ -15,15 +15,15 @@ import lombok.Getter;
 
 @Getter
 @Entity
-@Table(name = "room")
+@Table(name = "chat_room")
 @SequenceGenerator(
-    name = "room_seq",
-    sequenceName = "room_seq",
+    name = "chat_room_seq",
+    sequenceName = "chat_room_seq",
     initialValue = 1,
     allocationSize = 1)
-public class Room extends BaseEntity {
+public class ChatRoom extends BaseEntity {
   @Id
-  @GeneratedValue(generator = "room_seq", strategy = GenerationType.SEQUENCE)
+  @GeneratedValue(generator = "chat_room_seq", strategy = GenerationType.SEQUENCE)
   private long idx;
 
   @Column(name = "name")
